@@ -26,10 +26,14 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
-        this.vehicle = new MyVehicle(this,0,0,0,0,0);
+        this.vehicle = new MyVehicle(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
+        this.scaleFactor = 1;
+        this.speedFactor = 1;
+        this.selectedTexture = 0;
+        this.textureIds = { 'Board': 0, 'Floor': 1, 'Window': 2 };
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -48,7 +52,9 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-       this.checkKeys();
+        this.checkKeys();
+        this.vehicle.update();
+
     }
 
     display() {
@@ -72,7 +78,9 @@ class MyScene extends CGFscene {
 
         //This sphere does not have defined texture coordinates
         //this.incompleteSphere.display();
+        this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
         this.vehicle.display();
+
 
         // ---- END Primitive drawing section
     }
@@ -82,13 +90,43 @@ class MyScene extends CGFscene {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyW")) {
             text += " W ";
+            this.vehicle.accelerate(this.speedFactor);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyS")) {
             text += " S ";
+            this.vehicle.accelerate(-this.speedFactor);
             keysPressed = true;
         }
-        if (keysPressed)
+        if (this.gui.isKeyPressed("KeyA")) {
+            text += " A ";
+            this.vehicle.turn(1);
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyD")) {
+            text += " D ";
+            this.vehicle.turn(-1);
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyR")) {
+            text += " R ";
+            this.vehicle.reset();
+            keysPressed = true;
+        }
+        if (keysPressed){
+
             console.log(text);
+        console.log(Math.sin(this.vehicle.orientation));
+        console.log(Math.cos(this.vehicle.orientation));
+        }
     }
+    onScaleFactorChanged(v) {
+       this.scaleFactor = v;
+    }
+    onSpeedFactorChanged(v) {
+        this.speedFactor = v;
+    }
+    updateAppliedTexture(v){
+        this.selectedTexture = v;
+    };
 }

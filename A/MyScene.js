@@ -27,6 +27,7 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.vehicle = new MyVehicle(this);
+        
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -80,8 +81,7 @@ class MyScene extends CGFscene {
         //this.incompleteSphere.display();
         this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
         this.vehicle.display();
-
-
+        
         // ---- END Primitive drawing section
     }
     checkKeys() {
@@ -113,12 +113,9 @@ class MyScene extends CGFscene {
             this.vehicle.reset();
             keysPressed = true;
         }
-        if (keysPressed){
-
+        if (keysPressed)
             console.log(text);
-        console.log(Math.sin(this.vehicle.orientation));
-        console.log(Math.cos(this.vehicle.orientation));
-        }
+
     }
     onScaleFactorChanged(v) {
        this.scaleFactor = v;

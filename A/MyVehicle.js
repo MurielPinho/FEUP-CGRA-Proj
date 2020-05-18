@@ -13,15 +13,38 @@ class MyVehicle extends CGFobject {
         this.position.x = 0;
         this.position.y = 0;
         this.position.z = 0;
-        this.pyramid = new MyTriangle(this.scene);   
+        this.sphere = new MySphere(this.scene, 16, 8);  
+        this.cylinder = new MyCylinder(this.scene, 20, 1);
+        
     }
 
     display(){
-        
-        this.scene.translate(this.position.x, this.position.y, this.position.z);
+        this.scene.pushMatrix(); 
+         this.scene.translate(this.position.x, this.position.y, this.position.z);
         var radAng = (Math.PI * this.orientation) / 180;
         this.scene.rotate(radAng, 0, 1, 0);
-        this.pyramid.display();
+        this.scene.pushMatrix();
+        this.scene.scale(1, 1.1, 2);
+        this.sphere.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.scale(0.3,0.3,0.3);
+        this.scene.translate(0,-4,0);
+        this.scene.translate(0,0,-1.5);
+        this.sphere.display();
+        this.cylinder.display();
+        this.scene.translate(0, 0, 1);
+        this.cylinder.display();
+        this.scene.translate(0, 0, 1);
+        this.cylinder.display();
+        this.scene.translate(0, 0, 1);
+        this.scene.rotate((Math.PI * 180) / 180, 0, 1, 0);
+
+        this.sphere.display();
+        this.scene.popMatrix();
+        
+
+        this.scene.popMatrix();
 
     }
 

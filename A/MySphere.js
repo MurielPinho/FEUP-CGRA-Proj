@@ -27,7 +27,7 @@ class MySphere extends CGFobject {
     var phi = 0;
     var theta = 0;
     var phiInc = Math.PI / this.latDivs;
-    var thetaInc = (2 * Math.PI) / this.longDivs;
+    var thetaInc = (2* Math.PI) / this.longDivs;
     var latVertices = this.longDivs + 1;
 
     // build an all-around stack at a time, starting on "north pole" and proceeding "south"

@@ -55,7 +55,7 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.vehicle.update();
-
+        
     }
 
     display() {
@@ -82,6 +82,8 @@ class MyScene extends CGFscene {
         this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
         this.vehicle.display();
         
+        
+
         // ---- END Primitive drawing section
     }
     checkKeys() {
@@ -100,12 +102,12 @@ class MyScene extends CGFscene {
         }
         if (this.gui.isKeyPressed("KeyA")) {
             text += " A ";
-            this.vehicle.turn(1);
+            this.vehicle.turn(2);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyD")) {
             text += " D ";
-            this.vehicle.turn(-1);
+            this.vehicle.turn(-2);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyR")) {
@@ -115,6 +117,12 @@ class MyScene extends CGFscene {
         }
         if (keysPressed)
             console.log(text);
+        if (!(text.includes("A") ^ text.includes("D")))
+        {
+            this.vehicle.turnleft = false;
+            this.vehicle.turnright = false;
+        }
+ 
 
     }
     onScaleFactorChanged(v) {

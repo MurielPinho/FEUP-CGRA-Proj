@@ -63,6 +63,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.scale(1,1,3);
+        this.scene.rotate((Math.PI * 90) / 180, 1, 0, 0);
         this.cylinder.display();
         this.scene.popMatrix();
         this.scene.translate(0, 0, 3);    

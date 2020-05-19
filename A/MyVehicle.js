@@ -37,7 +37,6 @@ class MyVehicle extends CGFobject {
         this.scene.translate(0,-4,0);
         this.scene.translate(0,0,-1.5);
         this.sphere.display();
-        this.cylinder.display();
         this.scene.pushMatrix();
         this.scene.translate(1.5,0,0);
         this.scene.scale(0.5,0.3,1);
@@ -62,12 +61,11 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.popMatrix();
-
-        this.scene.translate(0, 0, 1);
+        this.scene.pushMatrix();
+        this.scene.scale(1,1,3);
         this.cylinder.display();
-        this.scene.translate(0, 0, 1);
-        this.cylinder.display();
-        this.scene.translate(0, 0, 1);    
+        this.scene.popMatrix();
+        this.scene.translate(0, 0, 3);    
         this.scene.rotate((Math.PI * 180) / 180, 0, 1, 0);
         this.sphere.display();
         this.scene.rotate((Math.PI * -90) / 180, 0, 1, 0);
@@ -125,6 +123,7 @@ class MyVehicle extends CGFobject {
         this.position.z = 0;
         this.speed = 0;
         this.orientation = 0;
+        this.propellerAng = 0;
     }
 }
 

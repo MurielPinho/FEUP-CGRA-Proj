@@ -20,6 +20,7 @@ class MyVehicle extends CGFobject {
         this.turnleft = false;
         this.turnright = false;
         this.propellerAng=0;
+        this.autoP = false;
     }
 
     display(){
@@ -86,6 +87,10 @@ class MyVehicle extends CGFobject {
     }
 
     update(){
+        if(this.autoP){
+            this.orientation+= 3.6;
+        }
+
         var radAng = (Math.PI * this.orientation) / 180;
         this.directionvector.x = Math.sin(radAng);
         this.directionvector.y = 0;
@@ -97,25 +102,29 @@ class MyVehicle extends CGFobject {
         
     }
     turn(val){
-        this.temp = this.orientation;
-        if(val > 0)
+        if(!this.autoP)
         {
-            this.orientation += val;
-            this.turnleft = true;
-            this.turnright = false;
-        }
-        else if(val< 0)
-        {
-            this.orientation += val;
-            this.turnright = true;
-            this.turnleft = false;
+            if(val > 0)
+            {
+                this.orientation += val;
+                this.turnleft = true;
+                this.turnright = false;
+            }
+            else if(val< 0)
+            {
+                this.orientation += val;
+                this.turnright = true;
+                this.turnleft = false;
+            }
         }
     
     }
     accelerate(val){
+        if (!this.autoP) {
         this.speed += val;
         if(this.speed < 0)
             this.speed = 0;
+        }
     }
 
     reset(){
@@ -125,6 +134,24 @@ class MyVehicle extends CGFobject {
         this.speed = 0;
         this.orientation = 0;
         this.propellerAng = 0;
+        this.autoP = false;
+
+    }
+    auto(){
+        if(!this.autoP)
+        {
+            this.autoP = true;
+            this.speed = 0.3142;
+            this.turnleft = true;
+        }
+        else
+        {
+            this.autoP = false;
+            this.speed = 0;
+            this.turnleft = false;
+        }
+        
+
     }
 }
 

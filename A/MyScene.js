@@ -27,7 +27,6 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.vehicle = new MyVehicle(this);
-        
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -55,7 +54,7 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.vehicle.update();
-        
+
     }
 
     display() {
@@ -115,13 +114,22 @@ class MyScene extends CGFscene {
             this.vehicle.reset();
             keysPressed = true;
         }
-        if (keysPressed)
-            console.log(text);
-        if (!(text.includes("A") ^ text.includes("D")))
+        if (this.gui.isKeyPressed("KeyP")) {
+            text += " P ";
+            this.vehicle.auto();
+            keysPressed = true;
+        }
+        
+        if(!this.vehicle.autoP)
         {
+            if (!(text.includes("A") ^ text.includes("D"))) {
             this.vehicle.turnleft = false;
             this.vehicle.turnright = false;
+            }
         }
+        if (keysPressed)
+            console.log(text);
+       
  
 
     }

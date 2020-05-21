@@ -25,7 +25,7 @@ class MyVehicle extends CGFobject {
 
     display(){
         this.scene.pushMatrix(); 
-        //this.scene.translate(0, 10,0);
+        this.scene.translate(0, 10,0);
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         var radAng = (Math.PI * this.orientation) / 180;
         this.scene.rotate(radAng, 0, 1, 0);

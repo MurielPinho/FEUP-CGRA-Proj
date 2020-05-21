@@ -25,8 +25,10 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
+        this.terrain = new MyTerrain(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.vehicle = new MyVehicle(this);
+        this.plane = new MyPlane(this,60);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -42,7 +44,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-80, 60, 70), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -79,8 +81,15 @@ class MyScene extends CGFscene {
         //This sphere does not have defined texture coordinates
         //this.incompleteSphere.display();
         this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
+        this.pushMatrix();
+
         this.vehicle.display();
-        
+        this.popMatrix();
+
+        this.pushMatrix();
+
+        this.terrain.display();
+        this.popMatrix();
         
 
         // ---- END Primitive drawing section

@@ -29,6 +29,7 @@ class MyScene extends CGFscene {
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.vehicle = new MyVehicle(this);
         this.plane = new MyPlane(this,60);
+        this.cubemap = new MyCubeMap(this)
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -36,6 +37,14 @@ class MyScene extends CGFscene {
         this.speedFactor = 1;
         this.selectedTexture = 0;
         this.textureIds = { 'Board': 0, 'Floor': 1, 'Window': 2 };
+        
+        this.paisagem = new CGFappearance(this);
+        this.paisagem.setAmbient(0.1, 0.1, 0.1, 1);
+        this.paisagem.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.paisagem.setSpecular(0.1, 0.1, 0.1, 1);
+        this.paisagem.setShininess(10.0);
+        this.paisagem.loadTexture('images/cubemap.png');
+        this.paisagem.setTextureWrap('REPEAT', 'REPEAT');
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -90,6 +99,13 @@ class MyScene extends CGFscene {
 
         this.terrain.display();
         this.popMatrix();
+        
+        this.pushMatrix();
+        this.scale(50,50,50);
+        this.paisagem.apply();
+        this.cubemap.display();
+        this.popMatrix();
+        
         
 
         // ---- END Primitive drawing section

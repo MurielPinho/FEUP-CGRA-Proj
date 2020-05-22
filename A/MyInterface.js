@@ -44,7 +44,10 @@ class MyInterface extends CGFinterface {
         this.activeKeys[event.code] = false;
     };
     isKeyPressed(keyCode) {
-        // returns true if a key is marked as pressed, false otherwise
+        if (this.activeKeys[keyCode] === true && (keyCode == "keyL" || keyCode == "keyP")) {
+            this.activeKeys[keyCode] = false;
+            return true;
+        }
         return this.activeKeys[keyCode] || false;
     }
 }

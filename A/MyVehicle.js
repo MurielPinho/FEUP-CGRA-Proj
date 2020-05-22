@@ -101,7 +101,7 @@ class MyVehicle extends CGFobject {
         this.position.x += this.directionvector.x * this.speed;
         this.position.y += this.directionvector.y * this.speed;
         this.position.z += this.directionvector.z * this.speed;
-        this.propellerAng = (this.propellerAng + (this.speed*100))%360;
+        this.propellerAng = (this.propellerAng + 10+(this.speed*100))%360;
         
     }
     turn(val){

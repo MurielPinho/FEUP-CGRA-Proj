@@ -18,7 +18,7 @@ class MySupply extends CGFobject {
         this.position.z = z;
         this.speed = this.position.y / 60;
         this.quad = new MyQuad(scene);
-        this.state = SupplyStates.INACTIVE;
+        this.state = SupplyStates.FALLING;
         this.initMaterials();
         
     }
@@ -42,10 +42,7 @@ class MySupply extends CGFobject {
 
       
     }
-
     display() {
-
-
         this.supply_material.apply();
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.update();

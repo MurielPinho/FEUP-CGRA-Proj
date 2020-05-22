@@ -9,10 +9,14 @@ const SupplyStates = {
     LANDED: 2
 };
 class MySupply extends CGFobject {
-    constructor(scene) {
+    constructor(scene,x,y,z) {
         super(scene);
         this.initBuffers();
-
+        this.position = [];
+        this.position.x = x;
+        this.position.y = y;
+        this.position.z = z;
+        this.speed = this.position.y / 60;
         this.quad = new MyQuad(scene);
         this.state = SupplyStates.INACTIVE;
         this.initMaterials();
@@ -44,8 +48,24 @@ class MySupply extends CGFobject {
 
         this.supply_material.apply();
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.update();
+        if(this.state != SupplyStates.INACTIVE)
+        {
+            if(this.state == SupplyStates.FALLING)
+            {
+                this.displayFalling(); 
+            }
+            else{
+                this.displayLanded();
+            }
+  
+        }
 
+    }
+
+    displayFalling(){
         //Front Face
+        this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.pushMatrix();
         this.scene.translate(0, 0, 0.5);
         this.quad.display();
@@ -87,9 +107,32 @@ class MySupply extends CGFobject {
         this.scene.popMatrix();
     }
 
+    displayLanded(){
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.5, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.quad.display();
+        this.scene.translate(1, 0, 0);
+        this.quad.display();
+        this.scene.translate(-2, 0, 0);
+        this.quad.display();
+        this.scene.translate(1, 1,0 );
+        this.quad.display();
+        this.scene.translate(0, -2, 0);
+        this.quad.display();
+        this.scene.popMatrix();
+    }
+
     update()
     {
-
+        if(this.state == SupplyStates.FALLING)
+        {
+            this.position.y -= this.speed;
+        }
+        if(this.position.y <= 0)
+        {
+            this.state = SupplyStates.LANDED;
+        }
     }
 
     

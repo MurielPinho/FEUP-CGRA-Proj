@@ -8,6 +8,7 @@ class MyVehicle extends CGFobject {
         super(scene);
         this.orientation = 0;
         this.speed = 0;
+        this.lastSpeed = 0;
         this.position = [];
         this.directionvector = [];
         this.position.x = 0;
@@ -23,12 +24,14 @@ class MyVehicle extends CGFobject {
         this.autoP = false;
     }
 
-    display(){
+    display(scale){
         this.scene.pushMatrix(); 
         this.scene.translate(0, 10,0);
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         var radAng = (Math.PI * this.orientation) / 180;
         this.scene.rotate(radAng, 0, 1, 0);
+        this.scene.scale(scale, scale, scale);
+
         this.scene.pushMatrix();
         this.scene.scale(1, 1, 2);
         this.sphere.display();
@@ -141,13 +144,14 @@ class MyVehicle extends CGFobject {
         if(!this.autoP)
         {
             this.autoP = true;
+            this.lastSpeed = this.speed;
             this.speed = 0.3142;
             this.turnleft = true;
         }
         else
         {
             this.autoP = false;
-            this.speed = 0;
+            this.speed = this.lastSpeed;
             this.turnleft = false;
         }
         

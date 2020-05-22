@@ -30,21 +30,29 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this);
         this.plane = new MyPlane(this,60);
         this.cubemap = new MyCubeMap(this)
+        this.supp = new MySupply(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.scaleFactor = 1;
         this.speedFactor = 1;
         this.selectedTexture = 0;
-        this.textureIds = { 'Board': 0, 'Floor': 1, 'Window': 2 };
+        
         
         this.paisagem = new CGFappearance(this);
         this.paisagem.setAmbient(0.1, 0.1, 0.1, 1);
         this.paisagem.setDiffuse(0.9, 0.9, 0.9, 1);
         this.paisagem.setSpecular(0.1, 0.1, 0.1, 1);
         this.paisagem.setShininess(10.0);
-        this.paisagem.loadTexture('images/cubemap.png');
+        this.paisagem.loadTexture('images/mountains.png');
         this.paisagem.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.sky = new CGFtexture(this, 'images/sky.png');
+        this.polar = new CGFtexture(this, 'images/polar.jpg');
+        this.mountains = new CGFtexture(this, 'images/mountains.png');
+
+        this.textures = [ this.mountains,this.polar,this.sky, ];
+        this.textureIds = { 'Mountains': 0, 'Polar': 1, 'Sky': 2};
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -60,6 +68,9 @@ class MyScene extends CGFscene {
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
+    }
+    updateAppliedTexture() {
+        this.paisagem.setTexture(this.textures[this.selectedTexture]);
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
@@ -105,7 +116,10 @@ class MyScene extends CGFscene {
         this.paisagem.apply();
         this.cubemap.display();
         this.popMatrix();
-        
+        this.pushMatrix();
+        this.translate(0,0.5,0);
+        this.supp.display();
+        this.popMatrix();
         
 
         // ---- END Primitive drawing section
@@ -164,7 +178,5 @@ class MyScene extends CGFscene {
     onSpeedFactorChanged(v) {
         this.speedFactor = v;
     }
-    updateAppliedTexture(v){
-        this.selectedTexture = v;
-    };
+
 }

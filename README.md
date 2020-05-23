@@ -11,14 +11,10 @@
 
 ## Screenshoots
 
-<img src="Screenshots/proj-t04g10-1.png" width= "250" > 
-
-<img src="Screenshots/proj-t04g10-2.png" width= "250" >
-
-<img src="Screenshots/proj-t04g10-3.png" width= "250" >
-
-<img src="Screenshots/proj-t04g10-4.png" width= "250" >
-
-<img src="Screenshots/proj-t04g10-5.png" width= "250" >
+<img src="Screenshots/proj-t04g10-1.png" width= "500" > 
+<img src="Screenshots/proj-t04g10-2.png" width= "500" >
+<img src="Screenshots/proj-t04g10-3.png" width= "500" >
+<img src="Screenshots/proj-t04g10-4.png" width= "500" >
+<img src="Screenshots/proj-t04g10-5.png" width= "500" >
 
 

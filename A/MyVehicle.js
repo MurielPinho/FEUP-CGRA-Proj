@@ -148,12 +148,18 @@ initMaterials() {
         //Display Flag Ropes
         this.scene.pushMatrix();
         this.baseMaterial.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1.5, -8);
+        this.scene.scale(0.05, 5, 0.05);
+        this.cylinder.display();
+        this.scene.popMatrix();
 
         this.scene.rotate((Math.PI * -90) / 180, 1, 0, 0);
         this.scene.translate(0, 4,4);
-        this.scene.scale(0.1,4.2,0.1);
+        this.scene.scale(0.05, 4, 0.05);
         this.cylinder.display();
         this.scene.popMatrix();
+
         //Display Flag
         this.scene.pushMatrix();
         this.flagMotion.bind(1);

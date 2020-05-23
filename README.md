@@ -1,13 +1,16 @@
 # Computer Graphics Project
 
-**Turma 4 - Grupo 10** 
+## Live Application
 
-**Muriel Pinho - up201700132**
+[Application](https://murielpinho.github.io/FEUP-CGRA-Proj/Proj "Application")
 
-**Tomás Cabral Torres - up201800700**
+## Group Info
 
-**[Online Application](https://murielpinho.github.io/FEUP-CGRA-Proj/Proj "Online Application")**
+Turma 4 - Grupo 10
 
+Muriel Pinho - up201700132
+
+Tomás Cabral Torres - up201800700
 
 ## Screenshots
 

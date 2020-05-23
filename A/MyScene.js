@@ -31,7 +31,11 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this);
         this.plane = new MyPlane(this,60);
         this.cubemap = new MyCubeMap(this)
-        this.supply = new MySupply(this,0,10,0);
+        this.supplies = new Array(5); 
+        this.nSuppliesDelivered = 0;
+        for (let index = 0; index < this.supplies.length; index++) {
+            this.supplies[index] = new MySupply(this, 0, 9, 0);
+        }
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -39,6 +43,7 @@ class MyScene extends CGFscene {
         this.speedFactor = 1;
         this.selectedTexture = 0;
         this.selectedScene = 0;
+        
         
         this.esfera = new CGFappearance(this);
         this.esfera.setAmbient(0.1, 0.1, 0.1, 1);
@@ -95,8 +100,13 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        this.checkKeys();
-        this.vehicle.update();
+        this.lastTime = this.lastTime || 0;
+        this.deltaTime = t - this.lastTime;
+        this.lastTime = t;
+
+        this.checkKeys(t, this.deltaTime);
+
+        this.vehicle.update(t);
 
     }
 
@@ -132,11 +142,15 @@ class MyScene extends CGFscene {
             this.paisagem.apply();
             this.cubemap.display();
             this.popMatrix();
-
             this.pushMatrix();
-            this.translate(0,0.5,0);
-            this.supply.display();
+
+            for (let index = 0; index < this.supplies.length; index++) {
+                this.supplies[index].display(this.scaleFactor,this.lastTime);
+            }
+
             this.popMatrix();
+
+
         }
         else if(this.selectedScene == 1)
         {
@@ -165,67 +179,63 @@ class MyScene extends CGFscene {
             this.terrain.display();
             this.popMatrix();
         }
-     
-            
-   
-
-
-        
-     
-        // this.pushMatrix();
-        // this.vehicle.display(this.scaleFactor);
-        // this.popMatrix();
-
-        // this.pushMatrix();
-        // this.terrain.display();
-        // this.popMatrix();
-        
-        // this.pushMatrix();
-        // this.scale(50,50,50);
-        // this.paisagem.apply();
-        // this.cubemap.display();
-        // this.popMatrix();
-
-        // this.pushMatrix();
-        // this.translate(0,0.5,0);
-        // this.supply.display();
-        // this.popMatrix();
+    
         
 
         // ---- END Primitive drawing section
     }
-    checkKeys() {
+    resetSupplies(){
+        for (let index = 0; index < this.supplies.length; index++) {
+
+            this.supplies[index].reset();
+        }
+        this.nSuppliesDelivered = 0;
+    }
+    dropSupplies() {
+        if (this.nSuppliesDelivered < 5) {
+            this.supplies[this.nSuppliesDelivered].drop(this.vehicle.position.x, this.vehicle.position.z);
+            this.nSuppliesDelivered++;
+        }
+    }
+
+    checkKeys(t, deltaTime) {
         var text = "Keys pressed: ";
         var keysPressed = false;
-        // Check for key codes e.g. in https://keycode.info/
+        var timeIndependence = deltaTime / 1000;
         if (this.gui.isKeyPressed("KeyW")) {
             text += " W ";
-            this.vehicle.accelerate(this.speedFactor);
+            this.vehicle.accelerate(timeIndependence * this.speedFactor*10);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyS")) {
             text += " S ";
-            this.vehicle.accelerate(-this.speedFactor);
+            this.vehicle.accelerate(-timeIndependence * this.speedFactor * 10);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyA")) {
             text += " A ";
-            this.vehicle.turn(2);
+            this.vehicle.turn(timeIndependence * this.speedFactor * 5 * 10);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyD")) {
             text += " D ";
-            this.vehicle.turn(-2);
+            this.vehicle.turn(-timeIndependence * this.speedFactor * 5 * 10);
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyR")) {
             text += " R ";
             this.vehicle.reset();
+            this.resetSupplies();
             keysPressed = true;
         }
         if (this.gui.isKeyPressed("KeyP")) {
             text += " P ";
             this.vehicle.auto();
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyL")) {
+            text += " L ";
+            this.dropSupplies();
             keysPressed = true;
         }
         

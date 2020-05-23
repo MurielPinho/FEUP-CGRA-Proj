@@ -16,9 +16,9 @@ class MySupply extends CGFobject {
         this.position.x = x;
         this.position.y = y;
         this.position.z = z;
-        this.speed = this.position.y / 60;
+        this.speed = this.position.y / 3 ;
         this.quad = new MyQuad(scene);
-        this.state = SupplyStates.FALLING;
+        this.state = SupplyStates.INACTIVE;
         this.initMaterials();
         
     }
@@ -42,27 +42,33 @@ class MySupply extends CGFobject {
 
       
     }
-    display() {
+    display(scaleFactor,time) {
         this.supply_material.apply();
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-        this.update();
+        this.update(time);
         if(this.state != SupplyStates.INACTIVE)
         {
             if(this.state == SupplyStates.FALLING)
             {
-                this.displayFalling(); 
+                this.displayFalling(scaleFactor); 
             }
-            else{
-                this.displayLanded();
+            else if(this.state == SupplyStates.LANDED){
+                this.displayLanded(scaleFactor);
             }
   
         }
 
     }
 
-    displayFalling(){
+    displayFalling(scaleFactor){
         //Front Face
+        
+        this.scene.pushMatrix();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
+
+        this.scene.scale(scaleFactor*0.5, scaleFactor*0.5, scaleFactor*0.5);
+
+
         this.scene.pushMatrix();
         this.scene.translate(0, 0, 0.5);
         this.quad.display();
@@ -102,34 +108,63 @@ class MySupply extends CGFobject {
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.quad.display();
         this.scene.popMatrix();
+        this.scene.popMatrix();
+
     }
 
-    displayLanded(){
+    displayLanded(scaleFactor){
         this.scene.pushMatrix();
-        this.scene.translate(0, -0.5, 0);
+        this.scene.translate(this.position.x, this.position.y, this.position.z);
+        this.scene.scale(scaleFactor * 0.5, scaleFactor * 0.5, scaleFactor * 0.5);
+
+
+        this.scene.translate(0, 0.1, 0);
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.quad.display();
         this.scene.translate(1, 0, 0);
         this.quad.display();
         this.scene.translate(-2, 0, 0);
         this.quad.display();
-        this.scene.translate(1, 1,0 );
+        this.scene.translate(1, 1, 0 );
         this.quad.display();
         this.scene.translate(0, -2, 0);
         this.quad.display();
         this.scene.popMatrix();
     }
 
-    update()
+    update(time)
     {
+        this.lastTime = this.lastTime || 0;
+        this.deltaTime = time - this.lastTime;
+        this.lastTime = time;
+        var timeIndependence = this.deltaTime / 1000;
+
         if(this.state == SupplyStates.FALLING)
         {
-            this.position.y -= this.speed;
+            this.position.y -= this.speed*timeIndependence;
+
+            if(this.position.y <= 0)
+            {
+                this.position.y = 0;
+                this.state = SupplyStates.LANDED;
+            }
         }
-        if(this.position.y <= 0)
-        {
-            this.state = SupplyStates.LANDED;
-        }
+    }
+
+    drop(x,z)
+    {
+        this.position.z = z;
+        this.position.x = x;
+        this.state = SupplyStates.FALLING;
+    }
+
+    reset()
+    {
+        this.position.x = 0;
+        this.position.y = 10;
+        this.position.z = 0;
+        this.state = SupplyStates.INACTIVE;
+
     }
 
     

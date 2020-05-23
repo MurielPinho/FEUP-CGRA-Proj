@@ -9,7 +9,7 @@
 **[Online Application](https://murielpinho.github.io/FEUP-CGRA-Proj/Proj "Online Application")**
 
 
-## Screenshoots
+## Screenshots
 
 <img src="Screenshots/proj-t04g10-1.png" width= "500" > 
 <img src="Screenshots/proj-t04g10-2.png" width= "500" >

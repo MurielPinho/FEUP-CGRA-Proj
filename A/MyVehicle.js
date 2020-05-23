@@ -28,29 +28,29 @@ class MyVehicle extends CGFobject {
     }
 initMaterials() {
 
-    this.metalMaterial = new CGFappearance(this.scene);
-    this.metalMaterial.setAmbient(0.1, 0.1, 0.1, 1);
-    this.metalMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
-    this.metalMaterial.setSpecular(0.1, 0.1, 0.1, 1);
-    this.metalMaterial.setShininess(10.0);
-    this.metalMaterial.loadTexture('images/metal.jpg');
-    this.metalMaterial.setTextureWrap('REPEAT', 'REPEAT');
+    this.frontMaterial = new CGFappearance(this.scene);
+    this.frontMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.frontMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.frontMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.frontMaterial.setShininess(10.0);
+    this.frontMaterial.loadTexture('images/front.png');
+    this.frontMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
-    this.clothMaterial = new CGFappearance(this.scene);
-    this.clothMaterial.setAmbient(0.1, 0.1, 0.1, 1);
-    this.clothMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
-    this.clothMaterial.setSpecular(0.1, 0.1, 0.1, 1);
-    this.clothMaterial.setShininess(10.0);
-    this.clothMaterial.loadTexture('images/cloth.jpg');
-    this.clothMaterial.setTextureWrap('REPEAT', 'REPEAT');
+    this.bodyMaterial = new CGFappearance(this.scene);
+    this.bodyMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.bodyMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.bodyMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.bodyMaterial.setShininess(10.0);
+    this.bodyMaterial.loadTexture('images/body.png');
+    this.bodyMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
-    this.woodMaterial = new CGFappearance(this.scene);
-    this.woodMaterial.setAmbient(0.1, 0.1, 0.1, 1);
-    this.woodMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
-    this.woodMaterial.setSpecular(0.1, 0.1, 0.1, 1);
-    this.woodMaterial.setShininess(10.0);
-    this.woodMaterial.loadTexture('images/wood.jpeg');
-    this.woodMaterial.setTextureWrap('REPEAT', 'REPEAT');
+    this.baseMaterial = new CGFappearance(this.scene);
+    this.baseMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.baseMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.baseMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.baseMaterial.setShininess(10.0);
+    this.baseMaterial.loadTexture('images/base.png');
+    this.baseMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
     this.flagMaterial = new CGFappearance(this.scene);
     this.flagMaterial.setAmbient(0.1, 0.1, 0.1, 1);
@@ -76,13 +76,13 @@ initMaterials() {
 
         //Drawing main body
         this.scene.pushMatrix();
-        this.clothMaterial.apply();
+        this.bodyMaterial.apply();
         this.scene.scale(1, 1, 2);
         this.sphere.display();
         this.scene.popMatrix();
 
         //Drawing passanger compartment
-        this.woodMaterial.apply();
+        this.baseMaterial.apply();
 
         this.scene.scale(0.3,0.3,0.3);
         this.scene.translate(0,-4,0);
@@ -98,12 +98,13 @@ initMaterials() {
         this.scene.pushMatrix();
         this.scene.translate(0, 0, 3);
         this.scene.rotate((Math.PI * 180) / 180, 0, 1, 0);
+        this.frontMaterial.apply();
         this.sphere.display();
         this.scene.popMatrix();
 
         //Drawing propellers
         this.scene.pushMatrix();
-        this.metalMaterial.apply();
+        this.baseMaterial.apply();
 
         this.scene.translate(1.5, 0, -1);
         this.scene.scale(0.4, 0.4, 0.4);
@@ -120,7 +121,7 @@ initMaterials() {
 
         //Drawing Engines
         this.scene.pushMatrix();
-        this.metalMaterial.apply();
+        this.baseMaterial.apply();
 
         this.scene.translate(1.5, 0, 0);
         this.scene.scale(0.5, 0.3, 1);
@@ -131,7 +132,7 @@ initMaterials() {
 
         //Display Rudders
         this.scene.pushMatrix();
-        this.woodMaterial.apply();
+        this.baseMaterial.apply();
         this.scene.scale(1.5,1.5,1.5);
         this.scene.translate(0, 2.75, -3.5);
         this.scene.rotate((Math.PI * 90) / 180, 1, 0, 0);
@@ -146,7 +147,7 @@ initMaterials() {
 
         //Display Flag Ropes
         this.scene.pushMatrix();
-        this.woodMaterial.apply();
+        this.baseMaterial.apply();
 
         this.scene.rotate((Math.PI * -90) / 180, 1, 0, 0);
         this.scene.translate(0, 4,4);

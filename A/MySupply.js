@@ -22,14 +22,6 @@ class MySupply extends CGFobject {
         this.initMaterials();
         
     }
-    initBuffers() {
-        this.vertices = [];
-
-        //Counter-clockwise reference of vertices
-        this.indices = [];
-        this.primitiveType = this.scene.gl.TRIANGLES;
-        this.initGLBuffers();
-    }
 
     initMaterials() {
         this.supply_material = new CGFappearance(this.scene);

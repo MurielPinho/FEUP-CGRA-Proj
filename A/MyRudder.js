@@ -6,61 +6,67 @@
 class MyRudder extends CGFobject {
     constructor(scene) {
         super(scene);
-        this.initBuffers();
+        this.quad = new MyQuad(this.scene);
     }
-    initBuffers() {
-        this.vertices = [
-            0,1,0,	//0
-            2,1,0,	//1
-            2,3,0,	//2
-            0,3,0, //3
-            -2,1,0, //4
-            2,-1,0, //5 
-            0,-1,0, //6 
-            0,-3,0, //7 
-            2,-3,0, //8 
-            -2,-1,0 //9
-        ];
 
-        //Counter-clockwise reference of vertices
-        this.indices = [
-            2,1,0,
-            2,0,3,
-            3,0,4,
-            4,0,6,
-            9,4,6,
-            8,6,5,
-            7,6,8,
-            9,6,7,
-            0,1,2,
-            3,0,2,
-            4,0,3,
-            6,0,4,
-            6,4,9,
-            5,6,8,
-            8,6,7,
-            7,6,9
-        ];
+    display()
+    {
+        this.scene.pushMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1.15, 0);
+        this.scene.rotate((Math.PI * 45) / 180, 0, 0, 1);
+        this.quad.display();
+        this.scene.popMatrix();
+        this.scene.translate(1,0,0);
+        this.quad.display();
+        this.scene.translate(-2, 0, 0);
+        this.quad.display();
+        this.scene.translate(0.25, 0.5, 0);
+        this.scene.pushMatrix();
+        this.scene.rotate((Math.PI * 45) / 180, 0, 0, 1);
+        this.quad.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(1.5, 0, 0);
+        this.scene.rotate((Math.PI * 45) / 180, 0, 0, 1);
+        this.quad.display();
 
-        this.normals = [
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-       ];
+        this.scene.popMatrix();  
+        this.scene.pushMatrix();
 
-        //The defined indices (and corresponding vertices)
-        //will be read in groups of three to draw triangles
-        this.primitiveType = this.scene.gl.TRIANGLES;
+        this.scene.rotate((Math.PI * 180) / 180, 0, 1, 0);
+        this.scene.translate(-0.75, -0.5, 0);
 
-        this.initGLBuffers();
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1.15, 0);
+        this.scene.rotate((Math.PI * 45) / 180, 0, 0, 1);
+        this.quad.display();
+        this.scene.popMatrix();
+        this.scene.translate(1, 0, 0);
+        this.quad.display();
+        this.scene.translate(-2, 0, 0);
+        this.quad.display();
+        this.scene.translate(0.25, 0.5, 0);
+        this.scene.pushMatrix();
+        this.scene.rotate((Math.PI * 45) / 180, 0, 0, 1);
+        this.quad.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(1.5, 0, 0);
+        this.scene.rotate((Math.PI * 45) / 180, 0, 0, 1);
+        this.quad.display();
+
+        this.scene.popMatrix();
+        this.scene.popMatrix();
+
+
+        
+
+
+        this.scene.popMatrix();
     }
+
+
+
 }
 

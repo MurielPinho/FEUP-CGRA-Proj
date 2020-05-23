@@ -31,6 +31,7 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this);
         this.plane = new MyPlane(this,60);
         this.cubemap = new MyCubeMap(this)
+        this.rudder = new MyRudder(this)
         this.supplies = new Array(5); 
         this.nSuppliesDelivered = 0;
         for (let index = 0; index < this.supplies.length; index++) {
@@ -161,8 +162,7 @@ class MyScene extends CGFscene {
         }
         else if (this.selectedScene == 2) {
             this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
-            this.cilindro.apply();
-            this.cylinder.display();
+            this.rudder.display();
         }
         else if (this.selectedScene == 3) {
             this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);

@@ -22,8 +22,48 @@ class MyVehicle extends CGFobject {
         this.cylinder = new MyCylinder(this.scene, 20, 1);
         this.rudder = new MyRudder(this.scene);
         this.propeller = new MyPropeller(this.scene);
-    }
+        this.flag = new MyFlag(this.scene,10);
+        this.initMaterials();
 
+    }
+initMaterials() {
+
+    this.metalMaterial = new CGFappearance(this.scene);
+    this.metalMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.metalMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.metalMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.metalMaterial.setShininess(10.0);
+    this.metalMaterial.loadTexture('images/metal.jpg');
+    this.metalMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.clothMaterial = new CGFappearance(this.scene);
+    this.clothMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.clothMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.clothMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.clothMaterial.setShininess(10.0);
+    this.clothMaterial.loadTexture('images/cloth.jpg');
+    this.clothMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.woodMaterial = new CGFappearance(this.scene);
+    this.woodMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.woodMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.woodMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.woodMaterial.setShininess(10.0);
+    this.woodMaterial.loadTexture('images/wood.jpeg');
+    this.woodMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.flagMaterial = new CGFappearance(this.scene);
+    this.flagMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+    this.flagMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.flagMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.flagMaterial.setShininess(10.0);
+    this.flagMaterial.loadTexture('images/ficaemcasa.jpg');
+    this.flagMaterial.setTextureWrap('REPEAT', 'REPEAT');
+    this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
+    this.flagMotion = new CGFtexture(this.scene.gl, "images/flagMotion.jpg");
+    this.flagShader.setUniformsValues({ texture: 1, speedFactor: 0.1, timeFactor: 0, uSampler2: 1 });
+
+}
     display(scale){
         var radAng = (Math.PI * this.orientation) / 180;
         
@@ -36,11 +76,14 @@ class MyVehicle extends CGFobject {
 
         //Drawing main body
         this.scene.pushMatrix();
+        this.clothMaterial.apply();
         this.scene.scale(1, 1, 2);
         this.sphere.display();
         this.scene.popMatrix();
 
         //Drawing passanger compartment
+        this.woodMaterial.apply();
+
         this.scene.scale(0.3,0.3,0.3);
         this.scene.translate(0,-4,0);
         this.scene.translate(0,0,-1.5);
@@ -60,6 +103,8 @@ class MyVehicle extends CGFobject {
 
         //Drawing propellers
         this.scene.pushMatrix();
+        this.metalMaterial.apply();
+
         this.scene.translate(1.5, 0, -1);
         this.scene.scale(0.4, 0.4, 0.4);
 
@@ -75,6 +120,8 @@ class MyVehicle extends CGFobject {
 
         //Drawing Engines
         this.scene.pushMatrix();
+        this.metalMaterial.apply();
+
         this.scene.translate(1.5, 0, 0);
         this.scene.scale(0.5, 0.3, 1);
         this.sphere.display();
@@ -84,19 +131,45 @@ class MyVehicle extends CGFobject {
 
         //Display Rudders
         this.scene.pushMatrix();
-        this.scene.translate(0, 4, -4);
-        this.scene.rotate((Math.PI * 90) / 180, 0, 1, 0);
-        this.scene.rotate((Math.PI * -90) / 180, 1, 0, 0);
+        this.woodMaterial.apply();
+        this.scene.scale(1.5,1.5,1.5);
+        this.scene.translate(0, 2.75, -3.5);
+        this.scene.rotate((Math.PI * 90) / 180, 1, 0, 0);
         this.rudder.display();
-        this.scene.rotate((Math.PI * -90) / 180, 1, 0,0 );
+        this.scene.rotate((Math.PI * -90) / 180, 0, 1,0 );
         if(this.turnleft)
-            this.scene.rotate((Math.PI * 20) / 180, 0, 1, 0);
+            this.scene.rotate((Math.PI * 20) / 180, 1, 0, 0);
         if(this.turnright)
-            this.scene.rotate((Math.PI * -20) / 180, 0, 1, 0);
+            this.scene.rotate((Math.PI * -20) / 180, 1, 0, 0);
         this.rudder.display();
         this.scene.popMatrix();
 
+        //Display Flag Ropes
+        this.scene.pushMatrix();
+        this.woodMaterial.apply();
+
+        this.scene.rotate((Math.PI * -90) / 180, 1, 0, 0);
+        this.scene.translate(0, 4,4);
+        this.scene.scale(0.1,4.2,0.1);
+        this.cylinder.display();
+        this.scene.popMatrix();
+        //Display Flag
+        this.scene.pushMatrix();
+        this.flagMotion.bind(1);
+   
+        this.scene.translate(0,4,-13);
+
+        this.scene.setActiveShader(this.flagShader);
+        this.flagMaterial.apply();
+        this.flag.display();
+        this.scene.popMatrix();
+
+        
         this.scene.popMatrix(); 
+        this.scene.setActiveShader(this.scene.defaultShader);
+
+
+        
     }
 
     update(t){
@@ -118,7 +191,8 @@ class MyVehicle extends CGFobject {
         this.position.y += this.directionvector.y * this.speed * timeIndependence;
         this.position.z += this.directionvector.z * this.speed * timeIndependence;
         this.propellerAng = (this.propellerAng + 10 + (this.speed *100))%360;
-        
+        this.flagShader.setUniformsValues({ speedFactor:this.speed/50  ,timeFactor: t / 100 % 1000 });
+        ;
     }
     turn(val){
         if(!this.autoP)

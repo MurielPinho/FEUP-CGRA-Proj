@@ -150,7 +150,7 @@ initMaterials() {
         this.baseMaterial.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, 1.5, -8);
-        this.scene.scale(0.05, 5, 0.05);
+        this.scene.scale(0.1, 5, 0.05);
         this.cylinder.display();
         this.scene.popMatrix();
 
